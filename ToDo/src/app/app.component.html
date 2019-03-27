@@ -1,0 +1,50 @@
+<h1>ToDo List</h1>
+  
+<table>
+    <tr>
+      <td>Show all ToDos:</td>
+      <td><button (click)="getAllToDos()">Get all ToDos</button></td>
+    </tr>
+    <tr>
+      <td>Show all undone ToDos:</td>
+      <td><button (click)="getUndoneToDos()">Get undone ToDos</button></td>        
+    </tr> 
+    <tr>
+      <td>Get Items which are assigned to me: </td>
+      <td><input (change) = "assignedPerson($event.target.value)"/></td>
+    </tr>
+    <tr>
+      <td>Add a new Todo Item:</td>
+      <td>
+        <select>
+          <option *ngFor="let person of people"> {{person.name}} </option>
+        </select>
+        <button (click)="getPerson()">Get all People</button>
+      </td>
+      <td>
+          <td> description: <input type="text" name="description" (change)="addTodoDesc($event.target.value)"> </td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td> id: <input type="number" name="changeId" min="0" (change)="editCreateId($event.target.value)"> </td>
+      <td> description: <input type="text" name="description" (change)="editCreateDesc($event.target.value)"> </td>
+      <td> assignee: 
+        <select (change)="editCreateAssignee($event.target.value)">
+          <option *ngFor="let person of people"> {{person.name}} </option>
+        </select></td>
+      <td><input type="radio" name="done" value="done">done</td>
+      <td><button (click)="editTodo()">edit</button></td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td> id: <input type="number" (change)="changeDelete($event.target.value)" min="0"> </td>
+      <td><button (click)="deleteTodo()">delete</button></td>
+    </tr>
+</table>
+
+<div *ngFor="let todo of todos">
+  <div *ngIf="(filter || !todo.done) && (!todo.assignedTo || todo.assignedTo.includes(this.name))">
+      <p>Assigned To:{{ todo.assignedTo}} </p>
+      <p>Description:{{todo.description}}</p>
+  </div>
+</div>
